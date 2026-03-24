@@ -33,7 +33,7 @@ This repository contains **scripts only**. No data files are shared here. All da
 
 ## Reproducibility
 
-The code relies on publicly available R (v4.3.2) and Python (v3.9.12) packages cited in the manuscript. Scripts are provided in a structured and documented form to allow reproduction of the main analyses and figures.
+The code relies on publicly available R (v4.3.2) and Python (v3.9.12) packages cited in the manuscript. Scripts are provided in a structured and documented form to allow reproduction of the main analyses.
 
 ## Contact
 
