@@ -1,0 +1,106 @@
+# README — Source Data: Volcano Plots and Reactome GSEA
+
+## Overview
+This file contains the differential expression results and Reactome gene set
+enrichment analysis (GSEA) results underlying the volcano plots and GSEA dot
+plots shown for each pairwise endotype comparison (All Low vs Mixed, Mixed vs
+All High, All Low vs All High) in the 2000HIV cohort (NCT03994835).
+
+## Sheets
+Nine sheets are included, three per comparison:
+
+| Sheet name | Panel | Comparison | Content |
+|---|---|---|---|
+| AllLow_vs_Mixed_Volcano_Discovery | a (left) | All Low vs Mixed | Discovery cohort DE results |
+| AllLow_vs_Mixed_Volcano_Validation | a (middle) | All Low vs Mixed | Validation cohort DE results |
+| AllLow_vs_Mixed_GSEA_Reactome_Discovery | a (right) | All Low vs Mixed | Reactome GSEA (Discovery only) |
+| Mixed_vs_AllHigh_Volcano_Discovery | b (left) | Mixed vs All High | Discovery cohort DE results |
+| Mixed_vs_AllHigh_Volcano_Validation | b (middle) | Mixed vs All High | Validation cohort DE results |
+| Mixed_vs_AllHigh_GSEA_Reactome_Discovery | b (right) | Mixed vs All High | Reactome GSEA (Discovery only) |
+| AllLow_vs_AllHigh_Volcano_Discovery | c (left) | All Low vs All High | Discovery cohort DE results |
+| AllLow_vs_AllHigh_Volcano_Validation | c (middle) | All Low vs All High | Validation cohort DE results |
+| AllLow_vs_AllHigh_GSEA_Reactome_Discovery | c (right) | All Low vs All High | Reactome GSEA (Discovery only) |
+
+## Column definitions
+
+### Volcano sheets (*_Volcano_Discovery / *_Volcano_Validation)
+One row per gene tested in the corresponding DESeq2 differential expression
+model.
+
+- **GENEID:** Ensembl gene ID (versioned).
+- **SYMBOL:** HGNC gene symbol.
+- **GENETYPE:** gene biotype (e.g., protein_coding).
+- **DESCRIPTION:** gene description.
+- **CHR:** chromosome.
+- **comparison:** the pairwise comparison this row belongs to.
+- **regulation:** significance/direction flag assigned during the DESeq2
+  pipeline (n.s. / up / down). 
+- **baseMean:** mean of normalized counts across all samples (DESeq2 output).
+- **log2FoldChange:** log2 fold change between groups. This is the x-axis
+  value in the volcano plot.
+- **lfcSE:** standard error of the log2 fold change.
+- **pvalue:** raw p-value from the DESeq2 Wald test.
+- **padj:** Benjamini-Hochberg FDR-adjusted p-value. This is the y-axis value
+  (as -log10(padj)) in the Discovery volcano plot; the Validation volcano
+  plot instead uses -log10(pvalue) (raw p-value), consistent with the
+  discovery/validation two-stage design.
+
+
+### GSEA sheets (*_GSEA_Reactome_Discovery)
+One row per Reactome pathway tested by `gsePathway()` (all pathways passing
+the pipeline's internal significance cutoff, not just those shown in the
+dot plot), computed on the Discovery cohort only. Sorted by `p.adjust`
+ascending. The dot plot itself shows only a subset of these rows — the top
+15 most positive and top 15 most negative NES pathways with p.adjust < 0.05.
+
+- **ID:** Reactome pathway identifier.
+- **Description:** pathway name (as labeled in the plot).
+- **setSize:** number of genes in the pathway gene set. This is the point
+  size in the plot.
+- **enrichmentScore:** raw (non-normalized) GSEA enrichment score.
+- **NES:** normalized enrichment score, adjusted for gene set size. This is
+  the x-axis value in the plot.
+- **pvalue:** raw GSEA p-value.
+- **p.adjust:** Benjamini-Hochberg FDR-adjusted p-value. -log10(p.adjust) is
+  the color scale in the plot.
+- **qvalue:** Storey's q-value, an alternative FDR estimate to p.adjust.
+- **rank:** position in the ranked gene list at which the running
+  enrichment score reached its maximum (the leading-edge peak).
+- **leading_edge:** summary statistics for the leading-edge subset —
+  `tags` (% of gene set members contributing to the enrichment signal),
+  `list` (% of the ranked list scanned to reach the peak), and `signal`
+  (combined enrichment signal strength).
+- **genes:** leading-edge genes (gene symbols) driving the enrichment
+  signal for that pathway, semicolon-separated.
+
+## Data processing
+- Differential expression was performed using DESeq2, adjusted for Age, Sex,
+  Season of Collection, Plate (batch effects), Genetic PC1, COVID
+  vaccination, and Time to Laboratory Processing (Discovery cohort model
+  additionally adjusts for Center).
+- Discovery and Validation cohort models were run independently on the same
+  gene set.
+- GSEA gene ranking used -log10(raw p-value) x sign(log2FoldChange), based
+  on genes with a mapped Entrez ID; for Entrez IDs mapping to multiple
+  Ensembl IDs, the ID with the most extreme ranking value was retained.
+- GSEA was performed using the Reactome pathway database (ReactomePA::
+  gsePathway), Benjamini-Hochberg FDR correction, minimum gene set size 10,
+  maximum gene set size 500. Only the Discovery cohort was used for GSEA, as
+  it is the larger of the two cohorts.
+- The plotted GSEA pathways are restricted to the top 15 (by NES, in each
+  direction) among pathways passing p.adjust < 0.05; this is the same subset
+  reported in these sheets.
+
+## Relationship to other source data
+Sample-level cluster/endotype assignments used to define comparison groups
+are provided in the Endotype_Label sheet of the multi-omics heatmap source
+data file. Raw bulk RNA-seq data are deposited in the Radboud Data Repository
+(RDR); see the manuscript's Data Availability statement for repository links.
+
+## Code availability
+The differential expression and GSEA analysis pipeline is available at:
+https://github.com/victoriariosvzz2/Multiomics-Clusters-Reservoir-2000HIV
+
+## Contact
+For questions regarding this source data file, please contact the corresponding
+authors: André van der Ven (Radboudumc) and Linos Vandekerckhove (Ghent University).

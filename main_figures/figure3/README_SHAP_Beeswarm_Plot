@@ -1,0 +1,89 @@
+# README — Source Data: SHAP Beeswarm Plots (Binary Classification Models)
+
+## Overview
+This file contains the SHAP (SHapley Additive exPlanations) values and corresponding
+feature values underlying the beeswarm plots shown for each pairwise binary
+classification model distinguishing the three immune-reservoir endotypes (All Low,
+All High, Mixed) identified by multi-omics clustering in the 2000HIV cohort
+(NCT03994835).
+
+## Models covered
+Three pairwise binary classification comparisons are included, one set of sheets
+per comparison:
+- All Low vs Mixed
+- Mixed vs All High
+- All Low vs All High
+
+## Sheet contents
+Each comparison has three sheets:
+
+### [Comparison]_SHAP
+Rows = training samples used for that binary model. Columns:
+- **Sample_ID:** sample identifier, consistent with IDs used elsewhere in the
+  manuscript's source data (e.g., the multi-omics heatmap Endotype_Label sheet).
+- **[Feature columns]:** the SHAP value for each feature, for each sample, as
+  computed for that model. This is the value plotted along the x-axis of the
+  beeswarm plot.
+
+### [Comparison]_Features
+Same samples and same features, in the same row/column order as the corresponding
+_SHAP sheet. Columns:
+- **Sample_ID:** as above.
+- **[Feature columns]:** the processed feature value used as model input for that
+  sample. This is the value that determines point color (low-to-high) in the
+  beeswarm plot.
+
+Note: the _SHAP and _Features sheets must be read together — a beeswarm plot point
+is defined by a (SHAP value, feature value) pair for a given sample and feature.
+
+### [Comparison]_Summary
+One row per feature, ranked by importance (Rank 1 = top of the beeswarm plot).
+- **Rank:** feature ranking by mean absolute SHAP value, matching the top-to-bottom
+  order of features in the beeswarm plot.
+- **Mean_Abs_SHAP:** mean absolute SHAP value across samples; determines feature
+  ranking/ordering in the beeswarm plot.
+- **Mean_SHAP:** mean signed SHAP value; indicates overall directional effect.
+- **Min_SHAP / Max_SHAP:** range of SHAP values across samples, corresponding to
+  the horizontal spread of points for that feature in the plot.
+- **Min_Feature_Value / Max_Feature_Value:** range of the underlying (processed)
+  feature value, corresponding to the color range (low-to-high) shown for that
+  feature's points in the plot.
+
+This sheet is provided as a convenience summary to allow a quick cross-check
+against the published figure; the full per-sample values in the corresponding
+_SHAP and _Features sheets are the primary source data.
+
+## Data processing
+- Feature values shown are post-preprocessing (imputation, encoding, scaling as
+  applicable), i.e., the exact input passed to the trained classification models,
+  not raw/original-scale measurements.
+- SHAP values were computed using `shap.Explainer(trained_model, X)` followed by
+  `explainer(X)` (SHAP Python package), with the full processed feature matrix
+  passed explicitly as background data (interventional feature perturbation).
+  This matches the exact computation used to generate the published beeswarm
+  figures.
+- Only features used as input to each specific binary model are included in that
+  model's sheets; feature sets may differ slightly between comparisons due to
+  model-specific feature selection (e.g., variance inflation factor–based
+  multicollinearity reduction).
+
+## Quality checks performed
+Before export, each comparison's per-feature Min_Feature_Value and
+Max_Feature_Value (in the _Summary sheet) were checked to confirm they are not
+identical across all features, which would indicate a global (array-wide) scaling
+artifact rather than genuine per-feature ranges.
+
+## Relationship to other source data
+Sample-level cluster/endotype assignments corresponding to these Sample_IDs are
+also provided in the Endotype_Label sheet of the multi-omics heatmap source data
+file. Raw (pre-processing) values for the underlying omics and clinical features
+are deposited in the Radboud Data Repository (RDR); see the manuscript's Data
+Availability statement for repository links.
+
+## Code availability
+The full model training and SHAP analysis pipeline is available at:
+https://github.com/victoriariosvzz2/Multiomics-Clusters-Reservoir-2000HIV
+
+## Contact
+For questions regarding this source data file, please contact the corresponding
+authors: André van der Ven (Radboudumc) and Linos Vandekerckhove (Ghent University).

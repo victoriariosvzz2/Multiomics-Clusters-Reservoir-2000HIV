@@ -1,0 +1,66 @@
+# README — Source Data: Multi-Omics Heatmap (Discovery and Validation Cohorts)
+
+## Overview
+This file contains the numerical values underlying the multi-omics heatmap figure(s)
+showing driver markers across the Discovery and Validation cohorts of the 2000HIV
+study (NCT03994835). It accompanies the manuscript "Multi-Omics Clustering
+Differentiates the Total and Intact HIV Reservoirs and Related Host Immune
+Mechanisms."
+
+## Sheet contents
+
+### Discovery_Data / Validation_Data
+Each row corresponds to one marker (feature) selected as a validated driver marker
+(i.e., identified as a cluster-defining feature in both the Discovery and Validation
+cohorts via MoCluster feature selection).
+
+- **Column 1 (Omic_Layer):** the omics data type the marker belongs to
+  (Bulk_transcriptomics, Proteomics, Flowcytometry_abs, Methylation, Ex_Vivo,
+  Viral_Reservoir).
+- **Column 2 (Marker):** marker/feature name.
+- **Remaining columns:** one column per sample, containing the standardized value
+  plotted in the heatmap (see "Data processing" below).
+
+### Endotype_Label
+Each row corresponds to one sample.
+
+- **Column 1 (Sample_ID):** sample identifier, consistent with sample IDs used as
+  column headers in the Discovery_Data and Validation_Data sheets.
+- **Column 2 (Cluster_Label):** the immune-reservoir endotype assigned to that
+  sample by multi-omics clustering (All Low / All High / Mixed).
+
+## Data processing
+Values shown in Discovery_Data and Validation_Data are **standardized** values, not
+raw measurements:
+- Per-omics-layer standardization was performed using `getStdiz()` (MOVICS package),
+  with centering and scaling applied.
+- Standardization was performed independently within the Discovery and Validation
+  cohorts.
+
+Units of the underlying (pre-standardization) measurements per omics layer:
+- Bulk transcriptomics: log2-transformed counts
+- Proteomics: NPX (log2)
+- Flow cytometry: absolute cell counts (log2)
+- DNA methylation: M-values
+- Ex-vivo cytokine production: log2-transformed concentrations
+- Viral reservoir (HIV-1 DNA): log2-transformed copies
+
+## Raw (pre-standardization) data availability
+Raw, unstandardized data for all omics layers are deposited in the Radboud Data
+Repository (RDR) and are accessible to reviewers upon request/following the access
+instructions provided in the manuscript's Data Availability statement:
+- Bulk RNA-seq, DNA methylation, ex-vivo cytokine production:
+  https://doi.org/10.34973/p96d-kz55
+- Proteomics: https://doi.org/10.34973/qk29-f305
+- HIV-1 DNA reservoir data: https://doi.org/10.34973/2bf5-yc03
+- Flow cytometry: RDR collection ru.rumc.2000hiv_t0000321a_dsc_002
+
+
+## Code availability
+The analysis pipeline used to generate the clustering results and this figure
+(MOVICS/CIMLR/MoCluster-based multi-omics clustering) is available at:
+https://github.com/victoriariosvzz2/Multiomics-Clusters-Reservoir-2000HIV
+
+## Contact
+For questions regarding this source data file, please contact the corresponding
+authors: André van der Ven (Radboudumc) and Linos Vandekerckhove (Ghent University).

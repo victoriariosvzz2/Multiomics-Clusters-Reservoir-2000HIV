@@ -1,0 +1,75 @@
+# README — Source Data: Ex Vivo Cytokine Discovery vs. Validation 4-Quadrant Plots
+
+## Overview
+This file contains the regression results underlying the discovery-vs-validation
+scatter ("4-quadrant") plots of ex vivo-stimulated cytokine production, across
+the three pairwise endotype comparisons (All Low vs Mixed, Mixed vs All High,
+All Low vs All High) and two stimulation durations (24 Hours, 7 Days), in the
+2000HIV cohort (NCT03994835).
+
+## Sheets
+Six sheets are included, one per panel of the figure:
+
+| Sheet name | Panel | Comparison | Stimulation |
+|---|---|---|---|
+| AllLow_vs_Mixed_24h | a (left) | All Low vs Mixed | 24 Hours |
+| AllLow_vs_Mixed_7d | a (right) | All Low vs Mixed | 7 Days |
+| Mixed_vs_AllHigh_24h | b (left) | Mixed vs All High | 24 Hours |
+| Mixed_vs_AllHigh_7d | b (right) | Mixed vs All High | 7 Days |
+| AllLow_vs_AllHigh_24h | c (left) | All Low vs All High | 24 Hours |
+| AllLow_vs_AllHigh_7d | c (right) | All Low vs All High | 7 Days |
+
+## Column definitions
+Each sheet has one row per cytokine-stimulus combination.
+
+- **Cytokine_Stimulus:** the cytokine and stimulus pair (e.g., "IL5 (PHA)"),
+  as labeled in the figure.
+- **Beta_Discovery:** normalized regression coefficient (β) from the
+  Discovery cohort model. This is the x-axis value in the plot.
+- **Pvalue_Discovery:** raw p-value from the Discovery cohort model.
+- **FDR_Discovery:** Benjamini-Hochberg FDR-adjusted p-value from the
+  Discovery cohort model. Used (at FDR<0.05) to define "Significant in
+  discovery."
+- **Beta_Validation:** normalized regression coefficient (β) from the
+  Validation cohort model. This is the y-axis value in the plot.
+- **Pvalue_Validation:** raw p-value from the Validation cohort model. Used
+  (at P<0.05) to define "Significant in validation."
+- **FDR_Validation** (where available): Benjamini-Hochberg FDR-adjusted
+  p-value from the Validation cohort model.
+- **Significance_Category:** the significance/color category assigned to
+  each point in the plot, one of:
+  - "Validated direction and discovery significance (P-value < 0.05)" — P-value<0.05 in Discovery AND
+    with concordant effect direction in both Discovery and Validation cohorts
+  - "Significant in discovery (P<0.05)" — P-value<0.05 in Discovery only
+  - "Significant in validation (P<0.05)" — P-value<0.05 in Validation only
+  - "Other" — none of the above
+
+## Data processing
+- Each cytokine-stimulus combination's β (normalized regression coefficient)
+  and p-value were obtained from a separate linear regression model of
+  cytokine concentration against endotype group, adjusted for Age, Sex,
+  Season of Collection, Genetic PC1, COVID vaccination status, and Time to
+  Laboratory Processing.
+- Discovery and Validation cohort models were run independently, then joined
+  by cytokine-stimulus variable.
+- Significance classification uses p-values in the Discovery
+  cohort and consistency of effect estimates in the Validation cohort, consistent with
+  the two-stage discovery/validation design.
+- Ex vivo cytokine production was measured after two stimulation durations
+  (24 hours and 7 days), modeled and reported separately.
+
+## Relationship to other source data
+Sample-level cluster/endotype assignments used to define comparison groups
+are provided in the Endotype_Label sheet of the multi-omics heatmap source
+data file. Raw ex vivo cytokine production data are deposited in the Radboud
+Data Repository (RDR); see the manuscript's Data Availability statement for
+repository links.
+
+## Code availability
+The full analysis pipeline (including the regression models and plotting
+code for these figures) is available at:
+https://github.com/victoriariosvzz2/Multiomics-Clusters-Reservoir-2000HIV
+
+## Contact
+For questions regarding this source data file, please contact the corresponding
+authors: André van der Ven (Radboudumc) and Linos Vandekerckhove (Ghent University).

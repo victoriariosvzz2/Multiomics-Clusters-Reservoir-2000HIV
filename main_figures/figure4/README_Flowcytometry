@@ -1,0 +1,74 @@
+# README — Source Data: Discovery vs. Validation 4-Quadrant Plots In Flowcytometry (Immunophenotyping) Data
+
+## Overview
+This file contains the regression results underlying the discovery-vs-validation
+scatter ("4-quadrant") plots comparing immune cell population effect sizes across
+the three pairwise endotype comparisons (All Low vs Mixed, Mixed vs All High, All
+Low vs All High), for both Absolute cell counts and Percentages, in the 2000HIV
+cohort (NCT03994835).
+
+## Sheets
+Six sheets are included, one per panel of the figure:
+
+| Sheet name | Figure panel | Comparison | Measurement type |
+|---|---|---|---|
+| AllLow_vs_Mixed_ABS | a | All Low vs Mixed | Absolute counts |
+| AllLow_vs_Mixed_PCT | a | All Low vs Mixed | Percentages |
+| Mixed_vs_AllHigh_ABS | b | Mixed vs All High | Absolute counts |
+| Mixed_vs_AllHigh_PCT | b | Mixed vs All High | Percentages |
+| AllLow_vs_AllHigh_ABS | c | All Low vs All High | Absolute counts |
+| AllLow_vs_AllHigh_PCT | c | All Low vs All High | Percentages |
+
+## Column definitions
+Each sheet has one row per immune cell population (restricted to the populations
+selected for display in the figure).
+
+- **Cell_Population:** name of the immune cell population/subset (as labeled in
+  the figure where applicable).
+- **Beta_Discovery:** regression coefficient (β) from the Discovery cohort model.
+  This is the x-axis value in the plot.
+- **Pvalue_Discovery:** raw p-value from the Discovery cohort model.
+- **FDR_Discovery:** Benjamini-Hochberg FDR-adjusted p-value from the Discovery
+  cohort model. Used (at FDR<0.05) to define "Significant in discovery."
+- **Beta_Validation:** regression coefficient (β) from the Validation cohort
+  model. This is the y-axis value in the plot.
+- **Pvalue_Validation:** raw p-value from the Validation cohort model. Used
+  (at P<0.05) to define "Significant in validation."
+- **FDR_Validation** (where available): Benjamini-Hochberg FDR-adjusted p-value
+  from the Validation cohort model.
+- **Significance_Category:** the significance/color category assigned to each
+  point in the plot, one of:
+  - "Validated direction and significance" — FDR<0.05 in Discovery AND P<0.05 in
+    Validation, with concordant effect direction in both cohorts
+  - "Significant in discovery (FDR<0.05)" — FDR<0.05 in Discovery only
+  - "Significant in validation (P-value<0.05)" — P<0.05 in Validation only
+  - "Other" — none of the above
+
+## Data processing
+- Each population's Beta and p-value were obtained from a separate linear
+  regression model of the (inverse-normal-rank-transformed) cell population
+  value against endotype group, adjusted for Age, Sex, Season of Collection,
+  Genetic PC1, COVID vaccination status, and Time to Laboratory Processing.
+- Discovery and Validation cohort models were run independently, then joined by
+  cell population.
+- Significance classification uses FDR-corrected p-values in the Discovery
+  cohort and raw (nominal) p-values in the Validation cohort, consistent with
+  the two-stage discovery/validation design.
+- Only cell populations included in the pre-specified selected population list
+  for each panel are included in these sheets; this matches exactly the points
+  shown (labeled or unlabeled) in the corresponding figure panel.
+
+## Relationship to other source data
+Sample-level cluster/endotype assignments used to define the comparison groups
+are provided in the Endotype_Label sheet of the multi-omics heatmap source data
+file. Flow cytometry raw data are deposited in the Radboud Data Repository (RDR)
+collection ru.rumc.2000hiv_t0000321a_dsc_002; see the manuscript's Data
+Availability statement for access instructions.
+
+## Code availability
+The full analysis pipeline (including the regression models is available at:
+https://github.com/victoriariosvzz2/Multiomics-Clusters-Reservoir-2000HIV
+
+## Contact
+For questions regarding this source data file, please contact the corresponding
+authors: André van der Ven (Radboudumc) and Linos Vandekerckhove (Ghent University).
