@@ -6,8 +6,8 @@ This repository hosts the analysis scripts used in the manuscript:
 
 submitted to *Nature Communications* (manuscript reference: NCOMMS-26-060652-T).
 
-<!-- TODO: replace with the actual filename once uploaded, e.g. main_figures/graphical_abstract.png -->
-![Graphical abstract](main_figures/graphical_abstract.png)
+<img width="3544" height="1969" alt="Graphical Abstract Final" src="https://github.com/user-attachments/assets/dfa17631-fed7-434f-98f5-795c456aee9b" />
+
 
 ## Preprint
 
