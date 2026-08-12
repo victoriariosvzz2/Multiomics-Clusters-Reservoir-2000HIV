@@ -1,0 +1,11 @@
+scikit-learn==1.5.1
+xgboost==3.0.1
+pandas==2.2.2
+numpy==1.26.4
+statsmodels==0.14.4
+scipy==1.13.1
+joblib==1.4.2
+category_encoders==2.6.3
+imbalanced-learn==0.13.0
+shap==0.47.2
+matplotlib==3.10.0
