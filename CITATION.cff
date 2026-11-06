@@ -1,0 +1,35 @@
+
+cff-version: 1.2.0
+message: "If you use these analysis scripts, please cite this software release and the associated research paper."
+
+type: software
+title: "Multi-Omics Clustering Differentiates the Total and Intact HIV Reservoirs and Related Host Immune Mechanisms: Analysis Code"
+
+authors:
+  - family-names: "Rios-Vazquez"
+    given-names: "Victoria"
+    orcid: "https://orcid.org/0009-0003-6270-7175"
+    affiliation: "Radboud University Medical Center (Radboudumc)"
+
+version: "1.0.0"
+license: "MIT"
+repository-code: "https://github.com/victoriariosvzz2/Multiomics-Clusters-Reservoir-2000HIV"
+
+abstract: >-
+  Analysis code accompanying the study "Multi-Omics Clustering Differentiates
+  the Total and Intact HIV Reservoirs and Related Host Immune Mechanisms".
+  The repository contains R and Python scripts for multi-omics quality control,
+  integrative clustering, machine learning and model interpretation,
+  differential expression and pathway enrichment, flow cytometry, and
+  ex vivo cytokine analyses in the 2000HIV cohort. Documentation and a
+  synthetic-data machine learning demonstration are included. Individual-level
+  participant data are not distributed with the repository.
+
+keywords:
+  - "HIV reservoir"
+  - "2000HIV"
+  - "multi-omics"
+  - "bioinformatics"
+  - "machine learning"
+  - "immune profiling"
+  - "reproducible research"
