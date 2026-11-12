@@ -37,10 +37,6 @@ All analytical steps, parameters, and packages are described in detail in the Ma
                               per pairwise endotype comparison
 6_ex_vivo_cytokines/         Ex-vivo cytokine production analysis (24h and 7-day stimulation)
                               and discovery/validation overlap analysis
-main_figures/
-    figure1/ ... figure6/         Final figure image, source data workbook, and source-data
-                                  README for each main manuscript figure — see
-                                  main_figures/README.md
 LICENSE
 ```
 
